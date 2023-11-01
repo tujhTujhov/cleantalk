@@ -1,0 +1,25 @@
+version: '3.7'
+services:
+  memcache:
+    image: memcached:latest
+    ports:
+      - "11211:11211"
+
+  php:
+    image: wyveo/nginx-php-fpm:php82
+    ports:
+      - "83:80"
+    volumes:
+      - ./php:/usr/share/nginx/html
+    working_dir: "/usr/share/nginx/html"
+    depends_on:
+      - memcache
+
+  go:
+    build:
+      context: go
+      dockerfile: Dockerfile
+    ports:
+      - "82:8080"
+    depends_on:
+      - memcache

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Отправка запросов через AJAX</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+<div class="container">
+    <div class="row justify-content-center mt-5">
+        <div class="col-md-6">
+            <form id="form1">
+                <div class="form-group">
+                    <label for="input1">Запрос к PHP:</label>
+                    <input type="text" class="form-control" id="input1" placeholder="Введите IP для сервиса на PHP">
+                </div>
+                <button type="button" class="btn btn-primary" onclick="sendRequest('http://localhost:83', 'input1')">Отправить</button>
+                <div id="response1"></div>
+            </form>
+        </div>
+    </div>
+    <div class="row justify-content-center mt-4">
+        <div class="col-md-6">
+            <form id="form2">
+                <div class="form-group">
+                    <label for="input2">Запрос к GO:</label>
+                    <input type="text" class="form-control" id="input2" placeholder="Введите IP для сервиса на GO">
+                </div>
+                <button type="button" class="btn btn-primary" onclick="sendRequest('http://localhost:82', 'input2')">Отправить</button>
+                <div id="response2"></div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+    function sendRequest(url, inputId) {
+        const inputValue = document.getElementById(inputId).value;
+        const responseDiv = document.getElementById(`response${inputId.slice(-1)}`);
+
+        const xhr = new XMLHttpRequest();
+        xhr.open('GET', `${url}?ip=${inputValue}`, true);
+
+        xhr.onload = function () {
+            if (xhr.status === 200) {
+                responseDiv.textContent = `Ответ: ${xhr.responseText}`;
+            } else {
+                responseDiv.textContent = `Произошла ошибка при выполнении запроса: ${xhr.status}`;
+            }
+        };
+        xhr.send();
+    }
+</script>
+</body>
+</html>

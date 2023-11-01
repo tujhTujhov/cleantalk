@@ -1,0 +1,9 @@
+{
+    "name": "tujh/php",
+    "license": "",
+    "require": {
+        "geoip2/geoip2": "~2.0",
+        "ext-memcached": "*",
+        "ext-mbstring": "*"
+    }
+}
