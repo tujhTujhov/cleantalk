@@ -5,7 +5,8 @@ header("Access-Control-Allow-Origin: *");
 use GeoIp2\Database\Reader;
 
 $cityDbReader = new Reader('geoip2country.mmdb');
-$cache = new Memcached;
+$cache = new Memcached();
+$cache->addServer("localhost", 11211);
 
 $ip = $_GET['ip'];
 
